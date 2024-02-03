@@ -1,5 +1,8 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   FormControl,
   FormGroup,
   Input,
@@ -8,11 +11,12 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "tss-react/mui";
 
 interface FormData {
     title: string;
-    description: string;
+    desc: string;
   }
 
 const useStyle = makeStyles()(() => ({
@@ -46,13 +50,26 @@ const useStyle = makeStyles()(() => ({
 
   }
 }));
-const Todo = () => {
+const Todo = ({values}: {values?: FormData}) => {
   const { classes } = useStyle();
-  const {  register,handleSubmit, formState: { errors }} = useForm<FormData>();
+  const navigate = useNavigate();
+  const {  register,handleSubmit,watch, formState: { errors }, setValue} = useForm<FormData>();
+  const [open, setOpen] = React.useState(false);
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/')
+  };
   const onSubmit = (data: FormData) => {
     console.log("Form data:", data);
   };
+  const titleValue = watch("title");
+  const descValue = watch("desc");
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form} >
     <FormGroup className={classes.formStyle}>
@@ -66,6 +83,7 @@ const Todo = () => {
           error={!!errors.title}
           helperText={errors.title&&errors.title.message}
           classes={{ root: classes.inputStyle }}
+          defaultValue={values?.title}
           {...register("title", {
             required: "Please provide a title"
         })}
@@ -76,15 +94,15 @@ const Todo = () => {
         <FormControl >
         
       <TextField
-        id="description"
+        id="desc"
         label="Description"
         multiline
         rows={4}
-        error={!!errors.description}
+        error={!!errors.desc}
        classes={{root:classes.inputtext}}
-       helperText={ errors.description && errors.description.message}
-       
-         {...register("description", {
+       helperText={ errors.desc && errors.desc.message}
+       defaultValue={values?.desc}
+         {...register("desc", {
                             required: "Please provide a description",
                             maxLength: {
                                 value: 10,
@@ -95,16 +113,34 @@ const Todo = () => {
       </FormControl>
       <div className={classes.buttonContainer}>
         <FormControl className={classes.button}>
-          <Button  type= "submit" variant="contained" color="primary">
+          <Button  type= "submit" variant="contained" color="primary" disabled={!titleValue ||!descValue || !!errors.desc}>
             {" "}
             Save
           </Button>
         </FormControl>
         <FormControl className={classes.button}>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={handleClickOpen}  >
             {" "}
             Cancel
           </Button>
+
+          <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+           >
+        <DialogTitle id="alert-dialog-title">
+          {"Are You Sure You Want to Cancel"}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose}>NO</Button>
+          <Button onClick={handleClose} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+  
         </FormControl>
       </div>
     </FormGroup>

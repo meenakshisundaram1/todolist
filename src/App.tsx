@@ -5,20 +5,22 @@ import Header from "./components/Header";
 import { Router } from "@mui/icons-material";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./components/Homepage";
- import AddList from "./components/AddList";
+import AddList from "./components/AddList";
+import { DataProvider } from "./components/DataContext/DataContext";
+import EditTodo from "./components/EditTodo";
 
 function App() {
   return (
-     
-      <div >
-        <Header />
+    <div>
+      <Header />
+      <DataProvider>
         <Routes>
-        <Route path="/Add" element={<AddList/>}></Route>
-        <Route path="/"  element={<Homepage/>}/>
+          <Route path="/Add" element={<AddList />}></Route>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/Edit" element={<EditTodo />} ></Route>
         </Routes>
-
-      </div>
-    
+      </DataProvider>
+    </div>
   );
 }
 

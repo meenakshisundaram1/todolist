@@ -4,7 +4,7 @@ import Todo from '../helper/Todo'
 
 const AddList = () => {
   return (
-    <Grid  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background:'#4B95BD',height: "500px"}}>
+    <Grid  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background:'#4B95BD',height: "100vh"}}>
         
         <h1>ADD TODO  </h1>
         <Todo></Todo>
