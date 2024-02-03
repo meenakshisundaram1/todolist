@@ -9,10 +9,11 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "tss-react/mui";
+import { posttodo } from "../servicefile/apiservice";
 
 interface FormData {
     title: string;
@@ -64,11 +65,26 @@ const Todo = ({values}: {values?: FormData}) => {
     setOpen(false);
     navigate('/')
   };
-  const onSubmit = (data: FormData) => {
-    console.log("Form data:", data);
-  };
+  
   const titleValue = watch("title");
   const descValue = watch("desc");
+
+  
+    const saveData =async (data:FormData)=>{
+      try{
+        await posttodo(data);
+        console.log('Form data saved:', data);
+        handleClose();
+      }
+      catch(errors){
+        console.log(errors);
+      }
+    }
+  
+
+  const onSubmit = (data: FormData) => {
+    saveData(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form} >

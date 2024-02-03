@@ -29,7 +29,6 @@ const Details = ({
   color: string;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [hovered, setHovered] = React.useState(false);
   const open = Boolean(anchorEl);
   const {data, setDataValue} = useData();
   const navigate = useNavigate();
@@ -47,13 +46,7 @@ const Details = ({
   }
   const { classes } = useStyle();
  
-  const onmouseenter = () => {
-    setHovered(true);
-  };
-
-  const onmouseleave = () => {
-    setHovered(false);
-  };
+ 
 
 
   return (
