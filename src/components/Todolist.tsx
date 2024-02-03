@@ -1,10 +1,30 @@
-import React from "react";
-import { tododata } from "../helper/Tododata";
+import React, { useEffect, useState } from "react";
 import Details from "./AllTodoDetails";
 import { Grid } from "@mui/material";
+import { gettodo } from "../servicefile/apiservice";
 
 const colors = ["#8338ec", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"];
+interface TodoItem {
+  id: string;
+  title: string;
+  desc: string;
+}
 const Todolist = () => {
+  const [todoData, setTodoData] = useState<TodoItem[]>([]);
+
+  useEffect(()=>{
+    const fetchdata =async ()=>{
+      try{
+        const data = await gettodo();
+        setTodoData(data);
+      }
+      catch(error){
+        console.log(error);
+      }
+    };
+    fetchdata()
+
+  },[]);
   return (
     <Grid
       style={{
@@ -13,9 +33,9 @@ const Todolist = () => {
         flexWrap: "wrap",
       }}
     >
-      {tododata.map((item, index) => (
+      {todoData.map((item, index) => (
         <Details
-          key={index}
+          key={item.id}
           title={item.title}
           desc={item.desc}
           color={colors[index % 5]}

@@ -20,3 +20,14 @@ export const posttodo = async (data : myformdata) =>{
 
     }
 };
+export const gettodo = async ()=>{
+    try{
+        const responce = await axios.get(Base_URL);
+        console.log("the responce is ",responce);
+        return responce.data;
+
+    }
+    catch(errors){
+        console.log(errors );
+    }
+};
