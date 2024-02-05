@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/Add" element={<AddList />}></Route>
           <Route path="/" element={<Homepage />} />
-          <Route path="/Edit" element={<EditTodo />} ></Route>
+          <Route path="/Edit/:id" element={<EditTodo />} ></Route>
         </Routes>
       </DataProvider>
     </div>

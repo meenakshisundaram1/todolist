@@ -1,5 +1,5 @@
 import IconButton from "@mui/material/IconButton";
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
@@ -7,6 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import { useData } from "./DataContext/DataContext";
 import { useNavigate } from "react-router-dom";
+import { deletebyid } from "../servicefile/apiservice";
+import { CircularProgress } from "@mui/material";
 
 const options = ["edit", "delete"];
 
@@ -19,11 +21,12 @@ const useStyle = makeStyles()(() => ({
   },
 }));
 
-const Details = ({
+const Details = ({id,
   title,
   desc,
   color,
 }: {
+  id : string;
   title: string;
   desc: string;
   color: string;
@@ -32,6 +35,7 @@ const Details = ({
   const open = Boolean(anchorEl);
   const {data, setDataValue} = useData();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,9 +45,21 @@ const Details = ({
   };
   const handleValue = () => {
     setDataValue({title, desc})
-    navigate('Edit');
+    navigate(`Edit/${id}`);
 
   }
+  const handleDelete = async () => {
+    try {
+      setLoading(true); 
+      await deletebyid(id);
+      setLoading(false); 
+      navigate("/");
+    } catch (error) {
+      console.log("the error is", error);
+      setLoading(false); 
+    }
+  };
+  
   const { classes } = useStyle();
  
  
@@ -98,7 +114,7 @@ const Details = ({
         {options.map((option) => (
           <MenuItem
             key={option}
-            onClick={(e) => option === 'delete'? handleClose(e) : handleValue()}
+            onClick={(e) => option === 'delete'? handleDelete() : handleValue()}
             
           
           >
@@ -119,6 +135,7 @@ const Details = ({
           {desc}
         </p>
       </div>
+      {loading && <CircularProgress style={{ position: "absolute", top: "50%", left: "50%" }} />}
     </div>
   );
 };

@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { makeStyles } from "tss-react/mui";
 import { posttodo } from "../servicefile/apiservice";
 
-interface FormData {
+export interface FormData {
     title: string;
     desc: string;
   }
@@ -51,7 +51,7 @@ const useStyle = makeStyles()(() => ({
 
   }
 }));
-const Todo = ({values}: {values?: FormData}) => {
+const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:any)=> any}) => {
   const { classes } = useStyle();
   const navigate = useNavigate();
   const {  register,handleSubmit,watch, formState: { errors }, setValue} = useForm<FormData>();
@@ -70,21 +70,37 @@ const Todo = ({values}: {values?: FormData}) => {
   const descValue = watch("desc");
 
   
-    const saveData =async (data:FormData)=>{
-      try{
-        await posttodo(data);
-        console.log('Form data saved:', data);
-        handleClose();
-      }
-      catch(errors){
-        console.log(errors);
-      }
-    }
+    // const saveData =async (data:FormData)=>{
+    //   try{
+    //     await posttodo(data);
+    //     console.log('Form data saved:', data);
+    //     handleClose();
+    //   }
+    //   catch(errors){
+    //     console.log(errors);
+    //   }
+    // }
   
 
   const onSubmit = (data: FormData) => {
-    saveData(data);
+    actionhandler && actionhandler(data);
   };
+  console.log('error',errors.title)
+  console.log('error',descValue)
+  console.log('error',errors?.desc?.message)
+  console.log('error',!titleValue)
+  console.log('error',!descValue)
+  console.log('error', !!errors.desc)
+  
+  console.log('the  decription value', values?.desc)
+  console.log('the title value', values?.title)
+  console.log('title ',!titleValue)
+  console.log('desc',!descValue)
+  console.log('more than 10', !!errors.desc)
+  
+  
+  
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form} >
@@ -92,14 +108,16 @@ const Todo = ({values}: {values?: FormData}) => {
       <FormControl>
        
            <TextField
+           InputLabelProps={{ shrink: true }}
           id="title"
           label="title"
           multiline
           maxRows={4}
-          error={!!errors.title}
-          helperText={errors.title&&errors.title.message}
-          classes={{ root: classes.inputStyle }}
           defaultValue={values?.title}
+          error={!!errors.title && !values?.title}
+          helperText={(errors.title && !values?.title) && errors.title.message}
+          classes={{ root: classes.inputStyle }}
+          
           {...register("title", {
             required: "Please provide a title"
         })}
@@ -110,14 +128,16 @@ const Todo = ({values}: {values?: FormData}) => {
         <FormControl >
         
       <TextField
+      InputLabelProps={{ shrink: true }}
         id="desc"
         label="Description"
         multiline
         rows={4}
-        error={!!errors.desc}
+        defaultValue={values?.desc}
+        error={!!errors.desc && !values?.desc}
        classes={{root:classes.inputtext}}
-       helperText={ errors.desc && errors.desc.message}
-       defaultValue={values?.desc}
+       helperText={ (errors.desc && !values?.desc)  &&  errors.desc.message}
+      
          {...register("desc", {
                             required: "Please provide a description",
                             maxLength: {
@@ -129,14 +149,13 @@ const Todo = ({values}: {values?: FormData}) => {
       </FormControl>
       <div className={classes.buttonContainer}>
         <FormControl className={classes.button}>
-          <Button  type= "submit" variant="contained" color="primary" disabled={!titleValue ||!descValue || !!errors.desc}>
-            {" "}
+          {/* <Button  type= "submit" variant="contained" color="primary" disabled={( !values?.title) || (!values?.desc)}> */}
+          <Button  type= "submit" variant="contained" color="primary" disabled={(!titleValue && !values?.title) || (!descValue && !values?.desc)  ||!!errors.desc}>
             Save
           </Button>
         </FormControl>
         <FormControl className={classes.button}>
           <Button variant="contained" color="secondary" onClick={handleClickOpen}  >
-            {" "}
             Cancel
           </Button>
 
