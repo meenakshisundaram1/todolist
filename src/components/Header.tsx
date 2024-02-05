@@ -14,7 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const  {classes } = useStyle();
-  const isRootPath = location.pathname === "/";
+  const isRootPath = location.pathname === "/home";
 
   return (
     <div className="header-container">

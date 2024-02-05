@@ -9,17 +9,8 @@ import { useStyles } from "tss-react";
 
 const EditTodo = () => {
   const navigate = useNavigate();
-  
-
-
-  // const { data, setDataValue } = useData();
   const [value, setValue]= useState<FormData>({title: '', desc: ''});
   const params = useParams();
-//   const[data,setdata] = usestate()
-//   if(data){
-//     setdata(data);
-//   }
-//   console.log(data);
 const fetchData = async() => {
   const data = await gettodobyid(params?.id || '' );
  setValue(data)

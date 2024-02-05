@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header";
 import { Router } from "@mui/icons-material";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Homepage from "./components/Homepage";
 import AddList from "./components/AddList";
 import { DataProvider } from "./components/DataContext/DataContext";
@@ -16,8 +16,9 @@ function App() {
       <DataProvider>
         <Routes>
           <Route path="/Add" element={<AddList />}></Route>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/home" element={<Homepage />} />
           <Route path="/Edit/:id" element={<EditTodo />} ></Route>
+          <Route path="/" element={<Navigate to="/home" replace />} />
         </Routes>
       </DataProvider>
     </div>

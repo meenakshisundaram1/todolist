@@ -63,24 +63,15 @@ const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:
 
   const handleClose = () => {
     setOpen(false);
-    navigate('/')
+   
   };
+  const handleCloses =() =>{
+    navigate('/')
+  }
   
   const titleValue = watch("title");
   const descValue = watch("desc");
 
-  
-    // const saveData =async (data:FormData)=>{
-    //   try{
-    //     await posttodo(data);
-    //     console.log('Form data saved:', data);
-    //     handleClose();
-    //   }
-    //   catch(errors){
-    //     console.log(errors);
-    //   }
-    // }
-  
 
   const onSubmit = (data: FormData) => {
     actionhandler && actionhandler(data);
@@ -110,7 +101,7 @@ const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:
            <TextField
            InputLabelProps={{ shrink: true }}
           id="title"
-          label="title"
+          label="Title*"
           multiline
           maxRows={4}
           defaultValue={values?.title}
@@ -130,7 +121,7 @@ const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:
       <TextField
       InputLabelProps={{ shrink: true }}
         id="desc"
-        label="Description"
+        label="Description*"
         multiline
         rows={4}
         defaultValue={values?.desc}
@@ -170,7 +161,7 @@ const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose}>NO</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleCloses} autoFocus>
             Yes
           </Button>
         </DialogActions>

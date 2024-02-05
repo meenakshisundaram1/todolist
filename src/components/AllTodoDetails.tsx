@@ -5,10 +5,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
-import { useData } from "./DataContext/DataContext";
 import { useNavigate } from "react-router-dom";
 import { deletebyid } from "../servicefile/apiservice";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const options = ["edit", "delete"];
 
@@ -33,32 +32,40 @@ const Details = ({id,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const {data, setDataValue} = useData();
+  const [hover, setHover] = useState(false);
+  const [DeleteOption, setDeleteOption] = useState<boolean>(false)
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+ 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (e: React.MouseEvent<HTMLLIElement>) => {
-    console.log("the option", e);
-    setAnchorEl(null);
-  };
+  // const handleClose = (e: React.MouseEvent<HTMLLIElement>) => {
+  //   console.log("the option", e);
+  //   setAnchorEl(null);
+  // };
+  const handleClose = () => {
+        setAnchorEl(null);
+        setDeleteOption(false)
+    };
   const handleValue = () => {
-    setDataValue({title, desc})
-    navigate(`Edit/${id}`);
+    navigate(`/Edit/${id}`);
 
   }
   const handleDelete = async () => {
+    setDeleteOption(true);
+   };
+  const Deletetodo = async () => {
     try {
-      setLoading(true); 
-      await deletebyid(id);
-      setLoading(false); 
-      navigate("/");
-    } catch (error) {
-      console.log("the error is", error);
-      setLoading(false); 
+      deletebyid(id);
+    setAnchorEl(null);
+    setDeleteOption(false)
+    navigate("/");
+}
+catch (error) {
+     console.log("the error is", error);
+      
     }
-  };
+};
   
   const { classes } = useStyle();
  
@@ -66,7 +73,7 @@ const Details = ({id,
 
 
   return (
-    <div style={{ width: 300, height: 200, background: color, margin: "30px" }}  >
+    <div style={{ width: 300, height: 200, background: color, margin: "30px" }}  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <Grid
         sx={{
           display: "flex",
@@ -79,7 +86,7 @@ const Details = ({id,
         >
           <p>{title}</p>
         </div>
-        <IconButton
+        {hover && <IconButton
           aria-label="more"
           id="long-button"
           aria-controls={open ? "long-menu" : undefined}
@@ -90,6 +97,9 @@ const Details = ({id,
         >
           <MoreVertIcon />
         </IconButton>
+        
+        }
+        
        
       </Grid>
 
@@ -135,7 +145,31 @@ const Details = ({id,
           {desc}
         </p>
       </div>
-      {loading && <CircularProgress style={{ position: "absolute", top: "50%", left: "50%" }} />}
+      {DeleteOption &&
+                    <Dialog
+                        // fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                    >
+                        <DialogTitle id="responsive-dialog-title">
+                            {"Confirmation"}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Are you sure you want to delete this todo card
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleClose}>
+                                No
+                            </Button>
+                            <Button onClick={Deletetodo} autoFocus>
+                                Yes
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+}
     </div>
   );
 };

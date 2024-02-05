@@ -4,6 +4,7 @@ import { CircularProgress, Grid } from "@mui/material";
 import { gettodo } from "../servicefile/apiservice";
 import { makeStyles } from "tss-react/mui";
 
+
 const colors = ["#8338ec", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"];
 interface TodoItem {
   id: string;
@@ -22,7 +23,7 @@ const useStyle = makeStyles()(() => ({
 const Todolist = () => {
   const [loading, setLoading] = useState(true);
   const [todoData, setTodoData] = useState<TodoItem[]>([]);
-  const { classes } = useStyle();
+  const {classes } = useStyle();
 
   useEffect(() => {
     const fetchdata = async () => {
