@@ -5,15 +5,13 @@ import {
   DialogTitle,
   FormControl,
   FormGroup,
-  Input,
-  InputLabel,
   TextField,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "tss-react/mui";
-import { posttodo } from "../servicefile/apiservice";
+
 
 export interface FormData {
     title: string;
@@ -54,7 +52,7 @@ const useStyle = makeStyles()(() => ({
 const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:any)=> any}) => {
   const { classes } = useStyle();
   const navigate = useNavigate();
-  const {  register,handleSubmit,watch, formState: { errors }, setValue} = useForm<FormData>();
+  const {  register,handleSubmit,watch, formState: { errors }} = useForm<FormData>();
   const [open, setOpen] = React.useState(false);
   
   const handleClickOpen = () => {
@@ -140,7 +138,7 @@ const Todo = ({values,actionhandler}: {values?: FormData,actionhandler?: (props:
       </FormControl>
       <div className={classes.buttonContainer}>
         <FormControl className={classes.button}>
-          {/* <Button  type= "submit" variant="contained" color="primary" disabled={( !values?.title) || (!values?.desc)}> */}
+        
           <Button  type= "submit" variant="contained" color="primary" disabled={(!titleValue && !values?.title) || (!descValue && !values?.desc)  ||!!errors.desc}>
             Save
           </Button>

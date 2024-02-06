@@ -23,7 +23,7 @@ const Todolist = () => {
         setTodoData(data);
         setTimeout(() => {
           setLoading(false);
-        }, 5000);
+        }, 2000);
       } catch (error) {
         console.log(error);
       }

@@ -1,6 +1,5 @@
 import IconButton from "@mui/material/IconButton";
 import React, { useState } from "react";
-import { makeStyles } from "tss-react/mui";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
