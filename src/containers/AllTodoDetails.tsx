@@ -7,18 +7,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import { deletebyid } from "../servicefile/apiservice";
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Button,  Card,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useStyle } from "../assests/styles";
 
 const options = ["edit", "delete"];
 
 const ITEM_HEIGHT = 48;
 
-const useStyle = makeStyles()(() => ({
-  menu: {
-    display: "flex",
-    marginLeft: "auto",
-  },
-}));
 
 const Details = ({id,
   title,
@@ -39,10 +34,6 @@ const Details = ({id,
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  // const handleClose = (e: React.MouseEvent<HTMLLIElement>) => {
-  //   console.log("the option", e);
-  //   setAnchorEl(null);
-  // };
   const handleClose = () => {
         setAnchorEl(null);
         setDeleteOption(false)
@@ -67,22 +58,18 @@ catch (error) {
     }
 };
   
-  const { classes } = useStyle();
+const { classes } = useStyle();
  
  
 
 
   return (
-    <div style={{ width: 300, height: 200, background: color, margin: "30px" }}  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <Card className={ classes.card} style ={{background: color}} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <Grid
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
+        className={ classes.grid }
       >
          <div
-          style={{ width: "100%", fontWeight: "bolder", marginLeft: "10px" }}
+          className={classes.title}
         >
           <p>{title}</p>
         </div>
@@ -135,19 +122,14 @@ catch (error) {
 
       <div style={{ marginLeft: "10px" }}>
         <p
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            // wordWrap: "break-word",
-          }}
+          className={classes.desc}
         >
           {desc}
         </p>
       </div>
       {DeleteOption &&
                     <Dialog
-                        // fullScreen={fullScreen}
+        
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="responsive-dialog-title"
@@ -170,7 +152,7 @@ catch (error) {
                         </DialogActions>
                     </Dialog>
 }
-    </div>
+    </Card>
   );
 };
 

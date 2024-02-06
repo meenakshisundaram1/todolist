@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useData } from "./DataContext/DataContext";
-import Todo from "../helper/Todo";
+import Todo from "../components/Todo";
 import { Grid } from "@mui/material";
 import { gettodobyid, puttoddobyid } from "../servicefile/apiservice";
 import { useNavigate, useParams } from "react-router-dom";
-import { FormData } from "../helper/Todo";
-import { useStyles } from "tss-react";
+import { FormData } from "../components/Todo";
+import { useStyle } from "../assests/styles";
+
 
 const EditTodo = () => {
   const navigate = useNavigate();
   const [value, setValue]= useState<FormData>({title: '', desc: ''});
+  const { classes } = useStyle();
   const params = useParams();
-const fetchData = async() => {
+
+  const fetchData = async() => {
   const data = await gettodobyid(params?.id || '' );
  setValue(data)
 }
@@ -36,7 +38,7 @@ const handleClose = () => {
 };
   return (
     <>
-    <Grid  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background:'#4B95BD',height: "100vh"}}>
+    <Grid  className={classes.add}>
       <h1>EditTodo</h1>
       <Todo values={value} actionhandler = {(e)=>editdata(e)} />
       </Grid>

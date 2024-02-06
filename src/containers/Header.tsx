@@ -1,14 +1,10 @@
 import React from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Button, Tooltip, Typography } from "@mui/material";
+import { Button, Grid, Tooltip, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { makeStyles } from "tss-react/mui";
+import { useStyle } from "../assests/styles";
 
-const useStyle = makeStyles()(() => ({
-  popper: {
-    background: "blue",
-  },
-}));
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,16 +13,16 @@ const Header = () => {
   const isRootPath = location.pathname === "/home";
 
   return (
-    <div className="header-container">
+    <Grid className={classes.headercontainer}>
       <Typography variant="h3">TODO</Typography>
       {isRootPath && (
         <Tooltip title="CreateNote"  arrow  >
           <Button onClick={() => navigate("Add")}>
-            <AddCircleIcon sx={{ color: "red", fontSize: "2.3rem" }} />
+            <AddCircleIcon className={classes.circleicon} />
           </Button>
         </Tooltip>
       )}
-    </div>
+    </Grid>
   );
 };
 

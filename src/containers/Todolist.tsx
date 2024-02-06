@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Details from "./AllTodoDetails";
 import { CircularProgress, Grid } from "@mui/material";
 import { gettodo } from "../servicefile/apiservice";
-import { makeStyles } from "tss-react/mui";
-
+import { useStyle } from "../assests/styles"; 
 
 const colors = ["#8338ec", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"];
 interface TodoItem {
@@ -11,15 +10,7 @@ interface TodoItem {
   title: string;
   desc: string;
 }
-const useStyle = makeStyles()(() => ({
-  centeringWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-  },
-}));
+
 const Todolist = () => {
   const [loading, setLoading] = useState(true);
   const [todoData, setTodoData] = useState<TodoItem[]>([]);
@@ -48,11 +39,7 @@ const Todolist = () => {
       )}
       {!loading && (
         <Grid
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-          }}
+          className={classes.displaygrid}
         >
           {todoData.map((item, index) => (
             <Details
