@@ -2,35 +2,37 @@ import React, { useEffect, useState } from "react";
 import Todo from "../components/Todo";
 import { Grid } from "@mui/material";
 import { gettodobyid, puttoddobyid } from "../servicefile/apiservice";
-import { useNavigate, useParams } from "react-router-dom";
-import { FormData } from "../components/Todo";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { myForm } from "../components/Todo";
 import { useStyle } from "../assests/styles";
 
 
 const EditTodo = () => {
   const navigate = useNavigate();
-  const [value, setValue]= useState<FormData>({title: '', desc: ''});
+  const [value, setValue]= useState<myForm>({id: '',title: '', desc: ''});
   const { classes } = useStyle();
-  const params = useParams();
+  const details = useLocation();
+  console.log("the details",details)
+  useEffect(()=>{
+    setValue(details.state)
+    
+  },[value])
 
-  const fetchData = async() => {
-  const data = await gettodobyid(params?.id || '' );
- setValue(data)
-}
-useEffect(() =>{
- fetchData();
-},[]);
+  console.log("the value",value)
+//   const fetchData = async() => {
+//   const data = await gettodobyid(params?.id || '' );
+//  setValue(data)
+// }
+// useEffect(() =>{
+//  fetchData();
+// },[]);
 
 
-const editdata  = async (data:any)=>{
-  try{
-   const editdata = await puttoddobyid(params?.id || '',data);
-    console.log('Form data saved:', editdata);
+const editdata  = async (data:myForm)=>{
+
+  console.log("insde the edit",data)
+   await puttoddobyid( data);
     handleClose();
-  }
-  catch(errors){
-    console.log(errors);
-  }
 
 };
 const handleClose = () => {

@@ -38,23 +38,21 @@ const Details = ({id,
         setDeleteOption(false)
     };
   const handleValue = () => {
-    navigate(`/Edit/${id}`);
+    navigate("/Edit",{state:{id, title, desc}});
+  
+    
 
   }
   const handleDelete = async () => {
     setDeleteOption(true);
    };
   const Deletetodo = async () => {
-    try {
+    
       deletebyid(id);
     setAnchorEl(null);
     setDeleteOption(false)
     navigate("/");
-}
-catch (error) {
-     console.log("the error is", error);
-      
-    }
+
 };
   
 const { classes } = useStyle();
@@ -78,28 +76,21 @@ const { classes } = useStyle();
           aria-controls={open ? "long-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
-          onClick={handleClick}
-         
+          onClick={handleClick}  
         >
           <MoreVertIcon />
         </IconButton>
         
-        }
-        
-       
+        } 
       </Grid>
-
       <Menu
-      
         id="long-menu"
         MenuListProps={{
           "aria-labelledby": "long-button",
         }}
         anchorEl={anchorEl}
         open={ open}
-
         onClose={handleClose}
-       
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
@@ -111,14 +102,11 @@ const { classes } = useStyle();
           <MenuItem
             key={option}
             onClick={(e) => option === 'delete'? handleDelete() : handleValue()}
-            
-          
           >
             {option}
           </MenuItem>
         ))}
       </Menu>
-
       <div style={{ marginLeft: "10px" }}>
         <p
           className={classes.desc}

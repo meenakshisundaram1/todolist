@@ -21,8 +21,11 @@ import { makeStyles } from "tss-react/mui";
     card:{
       width: 290, 
       height: 180, 
-       margin: "15px", 
-       borderRadius:"10px"
+       marginTop: "30px",
+       marginRight:"38px", 
+       marginLeft:"45px",
+       borderRadius:"10px",
+       
     },
     grid:{
       display: "flex",
@@ -53,7 +56,33 @@ import { makeStyles } from "tss-react/mui";
   },
   displaygrid:{
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection:"row",
     flexWrap: "wrap",
+    
+    minWidth:"200px"
   },
+  inputStyle: {
+    padding: "10px",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  button: {
+    padding: "10px",
+  },
+  inputtext: {
+    padding: "10px",
+    margin: "15px",
+  },
+  form:{
+    width:"60%",
+    padding:"30px",
+    backgroundColor: "white",
+    display:"flex",
+    flexDirection:"column"
+
+  },details:{
+    margin:"30px"
+  }
   }));
