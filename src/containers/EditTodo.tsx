@@ -5,6 +5,8 @@ import { gettodobyid, puttoddobyid } from "../servicefile/apiservice";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { myForm } from "../components/Todo";
 import { useStyle } from "../assests/styles";
+import { useDispatch } from "react-redux";
+import { toDoListActions } from "../redux/store/slice";
 
 
 const EditTodo = () => {
@@ -12,6 +14,7 @@ const EditTodo = () => {
   const [value, setValue]= useState<myForm>({id: '',title: '', desc: ''});
   const { classes } = useStyle();
   const details = useLocation();
+  const dispatch = useDispatch();
   console.log("the details",details)
   useEffect(()=>{
     setValue(details.state)
@@ -31,7 +34,8 @@ const EditTodo = () => {
 const editdata  = async (data:myForm)=>{
 
   console.log("insde the edit",data)
-   await puttoddobyid( data);
+   const response = await puttoddobyid( data);
+   dispatch(toDoListActions.editTodo(response));
     handleClose();
 
 };

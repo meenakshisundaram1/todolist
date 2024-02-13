@@ -5,5 +5,6 @@ export interface ITodo{
 };
 export interface ITodointialstate{
     todoList:ITodo[],
-    todoData:ITodo
+    todoData:ITodo,
+    response:{}
 };

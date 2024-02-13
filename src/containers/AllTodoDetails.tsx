@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { deletebyid } from "../servicefile/apiservice";
 import { Button,  Card,  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useStyle } from "../assests/styles";
+import { useDispatch } from "react-redux";
+import { toDoListActions } from "../redux/store/slice";
 
 const options = ["edit", "delete"];
 
@@ -29,6 +31,7 @@ const Details = ({id,
   const [hover, setHover] = useState(false);
   const [DeleteOption, setDeleteOption] = useState<boolean>(false)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
  
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,9 +49,9 @@ const Details = ({id,
   const handleDelete = async () => {
     setDeleteOption(true);
    };
-  const Deletetodo = async () => {
+  const Deletetodo =  () => {
     
-      deletebyid(id);
+    dispatch (toDoListActions.deleteaction(id));
     setAnchorEl(null);
     setDeleteOption(false)
     navigate("/");

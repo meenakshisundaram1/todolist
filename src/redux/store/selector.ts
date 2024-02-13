@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
+
 import { RootState } from "../../store";
-import { createAction, createSelector } from "@reduxjs/toolkit";
-import { ITodointialstate } from "../../Modals/types";
+import { createSelector } from "@reduxjs/toolkit";
 
 const selectDomain = (state:RootState) => state?.todoReducer
 
-export const selectAllToListData = createSelector([selectDomain],todos=>todos.todoList)
+export const selectAllToListData = createSelector([selectDomain],todo=>todo.todoList)
+// export const afterEditing = createSelector([selectDomain],todo=>todo.todoData)

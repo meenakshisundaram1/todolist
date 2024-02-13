@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 // import { todo } from "../../types/types";
 import { ITodo, ITodointialstate } from "../../Modals/types";
+import { serviceaction } from "./async-actions";
 
 const initialState:ITodointialstate = {
   todoList: [],
@@ -9,13 +10,14 @@ const initialState:ITodointialstate = {
     title: "",
     desc: "",
   },
+  response:{}
 };
 const todoslice = createSlice({
   name: "todos",
   initialState,
   reducers:{
     
-    getAllTodo:(state,action:PayloadAction<ITodo[]>)=>{
+    setAllTodo:(state,action:PayloadAction<ITodo[]>)=>{
       state.todoList = action.payload;
 
     },
@@ -26,19 +28,20 @@ const todoslice = createSlice({
         }
 
     },
-    // deleteTodo:(state,action:PayloadAction<any >)=>{
-    //     state.todoList = state.todoList.filter((t)=>t.id !== action.payload)
+    deleteTodo:(state,action:PayloadAction<any >)=>{
+        state.response = action.payload;
+    }
 
 
-    // },
-    testReducer:()=>{}
+    
+  
 
    
     
   }
 
 });
- export const toDoListActions = todoslice.actions
+ export const toDoListActions = {...todoslice.actions,...serviceaction}
 //  export const {getAllTodo, editTodo,testReducer} = todoslice.actions
 //  export const {getAllTodo, editTodo, deleteTodo,testReducer} = todoslice.actions
  export const {reducer:todoReducer} = todoslice

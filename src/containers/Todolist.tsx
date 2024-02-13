@@ -24,7 +24,7 @@ const Todolist = () => {
   const fetchdata = async () => {
     try {
       const data = await gettodo();
-      dispatch(toDoListActions.getAllTodo(data));
+      dispatch(toDoListActions.setAllTodo(data));
       setTodoData(data);
       setTimeout(() => {
         setLoading(false);
